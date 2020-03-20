@@ -1,0 +1,53 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: echo
+x-wso2-basePath: /Hello
+x-wso2-production-endpoints:
+  urls:
+  - http://localhost:10000/hello
+# x-wso2-disable-security: true
+# security:
+#   - petstore_basic: []
+# x-wso2-transports: 
+#   - "http"
+#   - "https"
+x-wso2-mutual-ssl: "optional"
+x-wso2-application-security: 
+  security-types: 
+    # - "oauth2"
+    - "basic_auth"
+  optional: false
+paths:
+  /sayHello:
+    get:
+      summary: echos the request
+      operationId: echoRequest
+      responses:
+        '200':
+          description: Expected response to a valid request
+      # x-wso2-disable-security: true  
+      security:
+        - petstore_auth: []    
+      # x-wso2-transports: 
+      #   - "http"
+      #   - "https"
+      x-wso2-application-security: 
+        security-types: 
+          - "oauth2"
+          # - "basic_auth"
+        # optional: false
+components:
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://petstore.swagger.io/oauth/authorize
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+    petstore_basic:
+      type: http
+      scheme: basic
+
